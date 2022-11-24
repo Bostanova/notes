@@ -1,0 +1,52 @@
+
+kubectl get                                 вывод списка ресурсов
+kubectl get pods -o wide
+kubectl get --watch pods                    вывод состояний подов
+kubectl get pods -l app=kuber-bootcamp      вывод списка подов с меткой kuber-bootcamp
+kubectl get rs                              вывод списка репликасетов (ReplicaSet) 
+    Notice that the name of the ReplicaSet is always formatted as [DEPLOYMENT-NAME]-[RANDOM-STRING]
+    
+kubectl set image deployments/kubern-bootcamp kuber-bootcamp=jocatalin/kuber-bootcamp:v2
+                                            обновление образа деплоймента kuber-bootcamp до версии v2
+
+kubectl describe                            вывод подробной информации о ресурсе
+kubectl describe pods                       выводит все контейнеры внутри подов, их докер образы, ip адреса, порты, логи сборки, используемые секреты, неймспейс и др
+
+kubectl logs                                        
+kubectl logs [имя контейнера]               вывод логов контейнера в поде
+
+kubectl scale                               масштабирование
+kubectl scale deployment/[deployment_name] -- replicas=2 
+                                            увеличение или уменьшение кол-ва реплик [deployment_name] до 2-х под
+
+kubectl exec                                выполнение команды в контейнере пода
+kubectl exec [имя поды] -- [команда]
+kubectl exec $POD_NAME -- bash              запускает bash терминал в контейнере
+kubectl exec $POD_NAME -- env               выводит результат команды env, выполненный внутри контейнера
+
+kubectl delete                              удаление ресурсов (не работает без указания ресурса)
+kubectl delete pod --all                    удаление всех под в кластере
+kubectl delete service -l app=app=kuber-bootcamp    
+                                            удаление всех сервисов с меткой kuber-bootcamp
+
+kubectl label                               работа с метками (не работает без указания ресурса)
+kubectl label pods $POD_NAME new_label      присвает метку new_label поде $POD_NAME
+
+kubectl create configmap sys-app-name --from-literal name=my-system
+                                            создает configmap с именем "sys-app-name", в ней лежит ключ "name" со значением "my-system"
+                                            флаг --from-literal позволяет указать отдельные пары ключ-значение (есть и др. опции, напр. --from-file, --from-env-file)
+
+kubectl create secret generic sys-app-creds --from-literal username=user1 --from-literal password=pass
+                                            cоздает секрет с именем "sys-app-creds", в которой две пары ключ-значение username=user1 и password=pass
+
+kubectl rollout undo deployments/kuber-bootcamp
+                                            откат деплоймента kuber-bootcamp к предыдущей стабильной версии
+
+kubectl wait --for=condition=ready pod -l app=new_label
+                                            выдает "condition met", если поды с метками new_label находятся в статусу Ready (pod is running)
+
+
+kubectl get pods -o go-template --template '{{range.items}}{{.metadata.name}}{{"\n"}}{{end}}'   
+                                            вывод имени поды (при условии, что крутится только один под)
+kubectl get services/kuber-bootcamp -o go-template='{{(index .spec.ports 0).nodePort}}'
+                                            вывод номера порта 

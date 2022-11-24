@@ -1,0 +1,24 @@
+Docker cheat sheet:
+    https://www.docker.com/wp-content/uploads/2022/03/docker-cheat-sheet.pdf
+    https://dockerlabs.collabnix.com/docker/cheatsheet/
+
+Flags:
+
+-d              запуск контейнера в фоновом режиме
+-p 8080:80      переброс локального порта 8080 в 80 порт контейнера
+-v              подключение volumes:
+    docker run -d -p 8080:80 -v $PWD/default.conf:/etc/nginx/conf.d/default.conf nginx:1.13
+-e              присвоение новых значений переменным    docker run -e 'VARIABLE=value' nginx:1.12
+-t              тегирование, здесь же указываем и версию (по умолчанию присвоится latest): 
+    docker build . -t my_image:latest
+      
+
+
+Commands:
+
+docker logs <container_name>        логи контейнера (удачный пример - контейнер с nginx, появятся логи сервера nginx)
+docker exec <container_name> cat /etc/nginx/conf.d/default.conf     
+                                    выполнение команды внутри контейнера (в данном случае выполняется команда cat)
+docker exec <container_name> nginx -s reload    перезагрузка nginx внутри контейнера
+
+docker rm -f <container_name>       удаление запущенного контейнера

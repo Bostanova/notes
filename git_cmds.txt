@@ -1,0 +1,55 @@
+ПЕРВОНАЧАЛЬНАЯ НАСТРОЙКА
+git config --global user.name "[имя]"                           Устанавливает имя, которое будет отображаться в поле автора у выполняемых вами коммитов    git config --global user.name "Yandex Student" 
+git config --global user.email "[адрес электронной почты]"      Задает адрес электронной почты, которая будет использоваться для всех комитов    git config --global user.email “student@yandex.ru”
+git remote                                                      Позволяет управлять подключениями к репозиториям    git remote set-url origin ssh://git@github.com/Yandex-Praktikum-DevOps/devops-basic.git
+
+
+БАЗОВЫЕ ОПЕРАЦИИ
+git init [название проекта]                                     Создание репозитория в текущей директории           git init my_cool_project
+git clone [url-адрес]                                           Скачать удаленный репозиторий
+
+
+СИНХРОНИЗАЦИЯ С УДАЛЕННЫМ РЕПОЗИТОРИЕМ
+git fetch [удалённый репозиторий]                               Скачивает историю из удалённого репозитория
+git push [удалённый репозиторий] [ветка]                        Загружает все изменения локальной ветки в удалённый репозиторий
+git pull                                                        Загружает историю из удалённого репозитория и объединяет её с локальной. pull = fetch + merge
+
+
+ВНЕСЕНИЕ ИЗМЕНЕНИЙ
+git status                                                      Перечисляет все новые или изменённые файлы, которые нуждаются в фиксации в индексе          git status -set
+git add [файл]                                                  Добавляем файлы в Index                                                                     git add index.html; git add . ; git add --all ;
+git rm [файл]                                                   Удаляет файл из рабочей директории и индексирует его удаление                               git rm index.html
+git rm --cached [файл]                                          Убирает файл из контроля версий, но физически оставляет его на своём месте                  git rm --cached index.html
+git mv [оригинальный файл] [новое имя]                          Перемещает или переименовывает файл, сразу индексируя его для последующего коммита          git mv index.html index.txt\
+
+git diff                                                        Показывает различия по внесённым изменениям в ещё не проиндексированных файлах              git diff
+git diff --staged                                               Показывает различия между проиндексированной и последней зафиксированной версиями файлов    git diff --staged
+git diff --name-only [branch1] [branch2]                        Показывает список отличающихся файлов между ветками                                                git diff --name-only master origin/american
+git diff --name-status [branch1] [branch2]                          - тот же список со статусом каждого файла (добавлен/удалён/модифицирован)               git diff --name-status master origin/american
+
+git log --follow [файл]                                         История изменений конкретного файла                                                         git log --follow index.txt
+git --no-pager log --decorate=short --pretty=oneline            Короткий вывод команды git log по веткам (один коммит - одна строка)
+git --no-pager log --decorate=short --pretty=oneline -n3            - вывод последних 3 коммитов
+
+git reset HEAD~                                                 Удаляет последний локальный коммит, полное удаление коммита из истории
+git reset --hard HEAD~3                                             - последние 3 коммита
+git push origin HEAD --force                                    Пушит удаление коммита/-ов в репозиторий
+
+КОММИТЫ 
+git commit -m "[описание комита]"                               Фиксирует проиндексированные изменения и сохраняет их в историю версий                      git commit -m "Added new feature."
+git commit –amend -m "новое описание к комиту"                  Изменение сообщения последнего комита                                                       git commit –amend -m "Added new feature. Task in Jira 3247"
+git log                                                         Просмотр изменений(комитов) проекта                                                         git log
+git show [номер комита]                                         Выводит информацию и показывает изменения в выбранном коммите                               git show 73b64290a107f6325ab88c7950637a4ce44c42a6
+git reset [номер коммита]                                       Отменяет все коммиты после заданного, оставляя все изменения в рабочей директории           git reset 73b64290a107f6325ab88c7950637a4ce44c42a6
+git log --graph --oneline --stat                                Просмотр изменений (коммитов) проекта виде графа                                            git log --graph --oneline --stat
+
+
+ВЕТВЛЕНИЯ
+git branch                                                      Список веток коммитов                                                                       git branch
+git branch [имя ветки]                                          Создать новую ветку                                                                         git branch feature1
+git push -u origin [имя ветки]                                  Запушить новую локальную ветку на удаленный репозиторий                                     git push -u origin release-0.0.1
+git checkout [имя ветки]                                        Переключиться на выбранную ветку                                                            git checkout feature1
+git branch -d [имя ветки]                                       Удалить выбранную ветку                                                                     git branch -d feature1
+git branch –m [cтарое_название_ветки] [новое_название_ветки]    Переименование ветки                                                                        git branch –m feature1 SuperButtonFeature
+git merge [имя ветки]                                           Слияние веток (вносит изменения указанной ветки в текущую ветку)                            git merge hotfix
+

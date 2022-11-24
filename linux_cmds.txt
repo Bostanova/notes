@@ -1,0 +1,8 @@
+lsb_release -a          check Ubuntu version
+
+cd ~ && explorer.exe .      открыть домашнюю папку в wsl
+code .                      открыть текущую папку в vscode
+
+passwd                      изменить пароль для текущего пользователя
+
+curl localhost:8080 -i      получение ответа по get запросу вместе с http заголовком
