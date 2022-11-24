@@ -1,3 +1,5 @@
+kubectl explain                             документация полей объектов
+kubectl explain deployment.spec.strategy    документация поля strategy в деплойменте
 
 kubectl get                                 вывод списка ресурсов
 kubectl get pods -o wide
@@ -5,12 +7,18 @@ kubectl get --watch pods                    вывод состояний под
 kubectl get pods -l app=kuber-bootcamp      вывод списка подов с меткой kuber-bootcamp
 kubectl get rs                              вывод списка репликасетов (ReplicaSet) 
     Notice that the name of the ReplicaSet is always formatted as [DEPLOYMENT-NAME]-[RANDOM-STRING]
+kubectl get deploy 
+kubectl get po      
     
 kubectl set image deployments/kubern-bootcamp kuber-bootcamp=jocatalin/kuber-bootcamp:v2
                                             обновление образа деплоймента kuber-bootcamp до версии v2
+kubectl set image replicaset my-replicaset nginx=nginx:1.21
+                                            обновление версиb образа nginx в replicaset'е
 
 kubectl describe                            вывод подробной информации о ресурсе
 kubectl describe pods                       выводит все контейнеры внутри подов, их докер образы, ip адреса, порты, логи сборки, используемые секреты, неймспейс и др
+kubectl describe pod <pod_name>                     здесь также будут ивенты
+kubectl describe pod <pod_name>                     здесь также будут ивенты
 
 kubectl logs                                        
 kubectl logs [имя контейнера]               вывод логов контейнера в поде
@@ -50,3 +58,7 @@ kubectl get pods -o go-template --template '{{range.items}}{{.metadata.name}}{{"
                                             вывод имени поды (при условии, что крутится только один под)
 kubectl get services/kuber-bootcamp -o go-template='{{(index .spec.ports 0).nodePort}}'
                                             вывод номера порта 
+
+kubectl get po <pod_name> -o=jsonpath='{.spec.containers[*].image}{"\n"}'
+                                            Ключ -o jsonpath позволяет получить не весь объект целиком, а только содержимое конкретных полей,
+                                            в данном случае поле image
