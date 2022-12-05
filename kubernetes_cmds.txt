@@ -62,3 +62,10 @@ kubectl get services/kuber-bootcamp -o go-template='{{(index .spec.ports 0).node
 kubectl get po <pod_name> -o=jsonpath='{.spec.containers[*].image}{"\n"}'
                                             Ключ -o jsonpath позволяет получить не весь объект целиком, а только содержимое конкретных полей,
                                             в данном случае поле image
+
+kubectl get cm -o yaml                      получение списка конфигмап в формате yaml
+kubectl get cm <cm_name> -o yaml
+
+kubectl port-forward <port_name> 8080:80    проброс порта 80 контейнера на локальный порт 8080
+        kubectl port-forward <port_name> 8080:80 &  запуск команды в фоновом режиме
+        curl 127.0.0.1:8080                         проверка порта 80 контейнера
