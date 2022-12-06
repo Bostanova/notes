@@ -36,6 +36,12 @@ Secret
  tls - TLS сертификаты для Ingress
 Секрет не шифрует информацию, а только кодирует (base64).
 
+Downward API
+
+Служебные поля, полученные из команды
+    kubectl get po <pod_name> -o yaml
+можно использовать в downward
+
 ---
 Получить значение только одного поля, в данном случае поля image:
 kubectl get po <pod_name> -o=jsonpath='{.spec.containers[*].image}{"\n"}'
